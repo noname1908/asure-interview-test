@@ -1,6 +1,6 @@
 const { awscdk } = require('projen');
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: '2.1.0',
+  cdkVersion: '2.42.1',
   defaultReleaseBranch: 'main',
   name: 'asure-interview-test',
 

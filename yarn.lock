@@ -1211,7 +1211,7 @@ at-least-node@^1.0.0:
   resolved "https://registry.yarnpkg.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-aws-cdk-lib@^2.1.0:
+aws-cdk-lib@^2.42.1:
   version "2.42.1"
   resolved "https://registry.yarnpkg.com/aws-cdk-lib/-/aws-cdk-lib-2.42.1.tgz#a006c7d6cdcd75d7169c4b1c52dd5ee624705ff6"
   integrity sha512-12KyAXhtKKCpTbwbs/HAYbIeIcB6RGd9mhHWrZA+6RpccXGwrDjFo36xAwmYMrUT+9FVewd703lNy+L3adRxbA==
@@ -1226,7 +1226,7 @@ aws-cdk-lib@^2.1.0:
     semver "^7.3.7"
     yaml "1.10.2"
 
-aws-cdk@^2.1.0:
+aws-cdk@^2.42.1:
   version "2.42.1"
   resolved "https://registry.yarnpkg.com/aws-cdk/-/aws-cdk-2.42.1.tgz#a15c5f29034ea50875593f738d38396e0fbefece"
   integrity sha512-+/mFl2TAT1ybpmTdrq24rc2vVBnJgH8rcOeSKOCY2kdQ8KcMUgT+pTJqJUXz4KJ42ZXhbqrt1KWrDTlTJ134FQ==
