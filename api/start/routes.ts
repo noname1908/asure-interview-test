@@ -28,7 +28,8 @@ Route.get('/', async ({ response }) => {
   return report.healthy ? response.ok(report) : response.badRequest(report)
 })
 
-// login
+// auth
 Route.group(() => {
   Route.post('login', 'AuthController.login')
+  Route.post('logout', 'AuthController.logout').middleware('auth:api')
 }).prefix('auth')

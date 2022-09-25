@@ -1,6 +1,4 @@
 import { test } from '@japa/runner'
-import Role from 'App/Models/Role'
-import User from 'App/Models/User'
 import { UserFactory } from 'Database/factories'
 import Database from '@ioc:Adonis/Lucid/Database'
 
