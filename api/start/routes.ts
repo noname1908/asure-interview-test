@@ -33,3 +33,8 @@ Route.group(() => {
   Route.post('login', 'AuthController.login')
   Route.post('logout', 'AuthController.logout').middleware('auth:api')
 }).prefix('auth')
+
+// mentors
+Route.group(() => {
+  Route.post('mentors', 'MentorsController.store')
+}).middleware(['auth:api', 'checkPermission:mentor'])
