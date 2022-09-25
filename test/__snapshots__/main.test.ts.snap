@@ -1,0 +1,457 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
+      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2",
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+    },
+  },
+  "Resources": {
+    "asureinterviewtestdevasgASG6E502ADE": {
+      "Properties": {
+        "LaunchConfigurationName": {
+          "Ref": "asureinterviewtestdevasgLaunchConfigA0CA8CF7",
+        },
+        "MaxSize": "2",
+        "MinSize": "1",
+        "Tags": [
+          {
+            "Key": "Name",
+            "PropagateAtLaunch": true,
+            "Value": "test-ec2/asure-interview-test-dev-asg",
+          },
+        ],
+        "TargetGroupARNs": [
+          {
+            "Fn::ImportValue": "test-base:ExportsOutputRefasureinterviewtestdevalbasureinterviewtestdevalblistenerasureinterviewtestdevasgtargetsGroup2FB779FDDFC01BC6",
+          },
+        ],
+        "VPCZoneIdentifier": [
+          {
+            "Fn::ImportValue": "test-base:ExportsOutputRefasureinterviewtestdevvpcPrivateSubnet1Subnet28B6093056B332DB",
+          },
+          {
+            "Fn::ImportValue": "test-base:ExportsOutputRefasureinterviewtestdevvpcPrivateSubnet2Subnet8267CFEA7014593B",
+          },
+          {
+            "Fn::ImportValue": "test-base:ExportsOutputRefasureinterviewtestdevvpcPrivateSubnet3Subnet88596C49E6FFCB6E",
+          },
+        ],
+      },
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "UpdatePolicy": {
+        "AutoScalingScheduledAction": {
+          "IgnoreUnmodifiedGroupSizeProperties": true,
+        },
+      },
+    },
+    "asureinterviewtestdevasgInstanceProfile58FB736E": {
+      "Properties": {
+        "Roles": [
+          {
+            "Ref": "asureinterviewtestdevec2role53D60150",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::InstanceProfile",
+    },
+    "asureinterviewtestdevasgInstanceSecurityGroupEF8F0EBB": {
+      "Properties": {
+        "GroupDescription": "test-ec2/asure-interview-test-dev-asg/InstanceSecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test-ec2/asure-interview-test-dev-asg",
+          },
+        ],
+        "VpcId": {
+          "Fn::ImportValue": "test-base:ExportsOutputRefasureinterviewtestdevvpc03830C289090CB34",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "asureinterviewtestdevasgInstanceSecurityGroupfromtestbaseasureinterviewtestdevalbSecurityGroup3E515B9E805FC1C58F": {
+      "Properties": {
+        "Description": "Load balancer to target",
+        "FromPort": 80,
+        "GroupId": {
+          "Fn::GetAtt": [
+            "asureinterviewtestdevasgInstanceSecurityGroupEF8F0EBB",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "SourceSecurityGroupId": {
+          "Fn::ImportValue": "test-base:ExportsOutputFnGetAttasureinterviewtestdevalbSecurityGroup5EB71584GroupId2BC4EFDF",
+        },
+        "ToPort": 80,
+      },
+      "Type": "AWS::EC2::SecurityGroupIngress",
+    },
+    "asureinterviewtestdevasgInstanceSecurityGrouptestbaseasureinterviewtestdevalbSecurityGroup3E515B9E80from0CF4A169": {
+      "Properties": {
+        "Description": "Load balancer to target",
+        "DestinationSecurityGroupId": {
+          "Fn::GetAtt": [
+            "asureinterviewtestdevasgInstanceSecurityGroupEF8F0EBB",
+            "GroupId",
+          ],
+        },
+        "FromPort": 80,
+        "GroupId": {
+          "Fn::ImportValue": "test-base:ExportsOutputFnGetAttasureinterviewtestdevalbSecurityGroup5EB71584GroupId2BC4EFDF",
+        },
+        "IpProtocol": "tcp",
+        "ToPort": 80,
+      },
+      "Type": "AWS::EC2::SecurityGroupEgress",
+    },
+    "asureinterviewtestdevasgLaunchConfigA0CA8CF7": {
+      "DependsOn": [
+        "asureinterviewtestdevec2roleDefaultPolicy14EF8A29",
+        "asureinterviewtestdevec2role53D60150",
+      ],
+      "Properties": {
+        "IamInstanceProfile": {
+          "Ref": "asureinterviewtestdevasgInstanceProfile58FB736E",
+        },
+        "ImageId": {
+          "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+        "InstanceType": "t2.micro",
+        "SecurityGroups": [
+          {
+            "Fn::GetAtt": [
+              "asureinterviewtestdevasgInstanceSecurityGroupEF8F0EBB",
+              "GroupId",
+            ],
+          },
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash
+mkdir -p $(dirname '/tmp/0362b338d6c386445d145c84715ebceef7f333d63d20ff6f5707db96f3bd5f89.zip')
+aws s3 cp 's3://cdk-hnb659fds-assets-242729241172-ap-southeast-1/0362b338d6c386445d145c84715ebceef7f333d63d20ff6f5707db96f3bd5f89.zip' '/tmp/0362b338d6c386445d145c84715ebceef7f333d63d20ff6f5707db96f3bd5f89.zip'
+mkdir -p $(dirname '/tmp/16a37b3155cd45adfb146b49f91ab55806a1ee9f24751482b7e2492697c1fe4e.zip')
+aws s3 cp 's3://cdk-hnb659fds-assets-242729241172-ap-southeast-1/16a37b3155cd45adfb146b49f91ab55806a1ee9f24751482b7e2492697c1fe4e.zip' '/tmp/16a37b3155cd45adfb146b49f91ab55806a1ee9f24751482b7e2492697c1fe4e.zip'
+mkdir -p $(dirname '/tmp/78b3c1ae8b6d28f80071ed436c023440c25945a15de6988f9fe028b658d80700.sh')
+aws s3 cp 's3://cdk-hnb659fds-assets-242729241172-ap-southeast-1/78b3c1ae8b6d28f80071ed436c023440c25945a15de6988f9fe028b658d80700.sh' '/tmp/78b3c1ae8b6d28f80071ed436c023440c25945a15de6988f9fe028b658d80700.sh'
+set -e
+chmod +x '/tmp/78b3c1ae8b6d28f80071ed436c023440c25945a15de6988f9fe028b658d80700.sh'
+'/tmp/78b3c1ae8b6d28f80071ed436c023440c25945a15de6988f9fe028b658d80700.sh' /tmp/16a37b3155cd45adfb146b49f91ab55806a1ee9f24751482b7e2492697c1fe4e.zip /tmp/0362b338d6c386445d145c84715ebceef7f333d63d20ff6f5707db96f3bd5f89.zip ap-southeast-1 ",
+                {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      {
+                        "Fn::Select": [
+                          0,
+                          {
+                            "Fn::Split": [
+                              "-",
+                              {
+                                "Fn::Select": [
+                                  6,
+                                  {
+                                    "Fn::Split": [
+                                      ":",
+                                      {
+                                        "Fn::ImportValue": "test-rds-mysql:ExportsOutputRefasureinterviewtestdevmysqlcredentialsAC28DCC9B76B4DEE",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Fn::Select": [
+                          1,
+                          {
+                            "Fn::Split": [
+                              "-",
+                              {
+                                "Fn::Select": [
+                                  6,
+                                  {
+                                    "Fn::Split": [
+                                      ":",
+                                      {
+                                        "Fn::ImportValue": "test-rds-mysql:ExportsOutputRefasureinterviewtestdevmysqlcredentialsAC28DCC9B76B4DEE",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Fn::Select": [
+                          2,
+                          {
+                            "Fn::Split": [
+                              "-",
+                              {
+                                "Fn::Select": [
+                                  6,
+                                  {
+                                    "Fn::Split": [
+                                      ":",
+                                      {
+                                        "Fn::ImportValue": "test-rds-mysql:ExportsOutputRefasureinterviewtestdevmysqlcredentialsAC28DCC9B76B4DEE",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Fn::Select": [
+                          3,
+                          {
+                            "Fn::Split": [
+                              "-",
+                              {
+                                "Fn::Select": [
+                                  6,
+                                  {
+                                    "Fn::Split": [
+                                      ":",
+                                      {
+                                        "Fn::ImportValue": "test-rds-mysql:ExportsOutputRefasureinterviewtestdevmysqlcredentialsAC28DCC9B76B4DEE",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+      },
+      "Type": "AWS::AutoScaling::LaunchConfiguration",
+    },
+    "asureinterviewtestdevasgScalingPolicycpuscaling29B0774D": {
+      "Properties": {
+        "AutoScalingGroupName": {
+          "Ref": "asureinterviewtestdevasgASG6E502ADE",
+        },
+        "PolicyType": "TargetTrackingScaling",
+        "TargetTrackingConfiguration": {
+          "PredefinedMetricSpecification": {
+            "PredefinedMetricType": "ASGAverageCPUUtilization",
+          },
+          "TargetValue": 70,
+        },
+      },
+      "Type": "AWS::AutoScaling::ScalingPolicy",
+    },
+    "asureinterviewtestdevasgScalingPolicyrequestperminutescalingE83D377B": {
+      "Properties": {
+        "AutoScalingGroupName": {
+          "Ref": "asureinterviewtestdevasgASG6E502ADE",
+        },
+        "PolicyType": "TargetTrackingScaling",
+        "TargetTrackingConfiguration": {
+          "PredefinedMetricSpecification": {
+            "PredefinedMetricType": "ALBRequestCountPerTarget",
+            "ResourceLabel": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Select": [
+                      1,
+                      {
+                        "Fn::Split": [
+                          "/",
+                          {
+                            "Fn::ImportValue": "test-base:ExportsOutputRefasureinterviewtestdevalbasureinterviewtestdevalblistenerE86B9EEE5B3E543D",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  "/",
+                  {
+                    "Fn::Select": [
+                      2,
+                      {
+                        "Fn::Split": [
+                          "/",
+                          {
+                            "Fn::ImportValue": "test-base:ExportsOutputRefasureinterviewtestdevalbasureinterviewtestdevalblistenerE86B9EEE5B3E543D",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  "/",
+                  {
+                    "Fn::Select": [
+                      3,
+                      {
+                        "Fn::Split": [
+                          "/",
+                          {
+                            "Fn::ImportValue": "test-base:ExportsOutputRefasureinterviewtestdevalbasureinterviewtestdevalblistenerE86B9EEE5B3E543D",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  "/",
+                  {
+                    "Fn::ImportValue": "test-base:ExportsOutputFnGetAttasureinterviewtestdevalbasureinterviewtestdevalblistenerasureinterviewtestdevasgtargetsGroup2FB779FDTargetGroupFullName0CF54918",
+                  },
+                ],
+              ],
+            },
+          },
+          "TargetValue": 100,
+        },
+      },
+      "Type": "AWS::AutoScaling::ScalingPolicy",
+    },
+    "asureinterviewtestdevec2role53D60150": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/SecretsManagerReadWrite",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "asureinterviewtestdevec2roleDefaultPolicy14EF8A29": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::cdk-hnb659fds-assets-242729241172-ap-southeast-1",
+                    ],
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::cdk-hnb659fds-assets-242729241172-ap-southeast-1/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "asureinterviewtestdevec2roleDefaultPolicy14EF8A29",
+        "Roles": [
+          {
+            "Ref": "asureinterviewtestdevec2role53D60150",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
