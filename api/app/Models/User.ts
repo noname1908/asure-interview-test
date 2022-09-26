@@ -11,6 +11,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import Role from 'App/Models/Role'
 import Mentor from 'App/Models/Mentor'
+import Student from 'App/Models/Student'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -46,4 +47,7 @@ export default class User extends BaseModel {
 
   @hasOne(() => Mentor)
   public mentor: HasOne<typeof Mentor>
+
+  @hasOne(() => Student)
+  public student: HasOne<typeof Student>
 }

@@ -8,9 +8,9 @@ import {
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
-import Student from 'App/Models/Student'
+import Mentor from './Mentor'
 
-export default class Mentor extends BaseModel {
+export default class Student extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -26,12 +26,12 @@ export default class Mentor extends BaseModel {
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
-  @manyToMany(() => Student, {
+  @manyToMany(() => Mentor, {
     localKey: 'id',
-    pivotForeignKey: 'mentor_id',
+    pivotForeignKey: 'student_id',
     relatedKey: 'id',
-    pivotRelatedForeignKey: 'student_id',
+    pivotRelatedForeignKey: 'mentor_id',
     pivotTable: 'student_mentor',
   })
-  public students: ManyToMany<typeof Student>
+  public mentors: ManyToMany<typeof Mentor>
 }

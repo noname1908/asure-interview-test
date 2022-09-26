@@ -39,3 +39,9 @@ Route.group(() => {
   Route.post('mentors', 'MentorsController.store')
   Route.delete('mentors/:id', 'MentorsController.destroy')
 }).middleware(['auth:api', 'checkPermission:mentor'])
+
+// students
+Route.group(() => {
+  Route.post('mentors/:mentorId/students', 'StudentsController.store')
+  Route.delete('mentors/:mentorId/students/:id', 'StudentsController.destroy')
+}).middleware(['auth:api', 'checkPermission:student'])
