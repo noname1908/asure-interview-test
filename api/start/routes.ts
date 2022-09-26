@@ -38,6 +38,7 @@ Route.group(() => {
 Route.group(() => {
   Route.post('mentors', 'MentorsController.store')
   Route.delete('mentors/:id', 'MentorsController.destroy')
+  Route.get('mentors', 'MentorsController.index')
 }).middleware(['auth:api', 'checkPermission:mentor'])
 
 // students

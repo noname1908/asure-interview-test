@@ -5,7 +5,17 @@ import Role from 'App/Models/Role'
 import Mentor from 'App/Models/Mentor'
 
 export default class MentorsController {
-  public async index({}: HttpContextContract) {}
+  public async index({ isAdmin, auth }: HttpContextContract) {
+    const mentors = isAdmin
+      ? await Mentor.query().preload('user') // requested by admin
+      : await Mentor.query()
+          .whereHas('students', (studentsQuery) => {
+            studentsQuery.where('user_id', auth.user!.id) // requested by student
+          })
+          .preload('user')
+
+    return mentors.map((mentor) => mentor.serialize())
+  }
 
   public async store({ request }: HttpContextContract) {
     // Mentor schema definition
@@ -24,7 +34,11 @@ export default class MentorsController {
 
     return {
       id: mentor.id,
-      ...user.serialize(),
+      ...user.serialize({
+        fields: {
+          omit: ['id'],
+        },
+      }),
     }
   }
 

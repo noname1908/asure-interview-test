@@ -3,11 +3,8 @@ import { AccessControl } from 'role-acl'
 let ac = new AccessControl()
 
 export default class CheckPermission {
-  public async handle(
-    { auth, request, response }: HttpContextContract,
-    next: () => Promise<void>,
-    resources: string[]
-  ) {
+  public async handle(ctx: HttpContextContract, next: () => Promise<void>, resources: string[]) {
+    const { auth, request, response } = ctx
     // get user role
     const loggedInUser = await auth.use('api').user!
     const userRole = await loggedInUser.related('role').query().first()
@@ -18,7 +15,9 @@ export default class CheckPermission {
     if (!permission.granted) {
       return response.forbidden('You are not allowed to perform this action')
     }
-    // code for middleware goes here. ABOVE THE NEXT CALL
+
+    // next process
+    ctx.isAdmin = userRole!.name === 'admin'
     await next()
   }
 }
