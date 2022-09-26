@@ -32,6 +32,7 @@ Route.get('/', async ({ response }) => {
 Route.group(() => {
   Route.post('login', 'AuthController.login')
   Route.post('logout', 'AuthController.logout').middleware('auth:api')
+  Route.get('user', 'AuthController.getLoggedInUser').middleware('auth:api')
 }).prefix('auth')
 
 // mentors

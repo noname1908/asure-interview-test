@@ -16,4 +16,10 @@ export default class AuthController {
       revoked: true,
     }
   }
+
+  public async getLoggedInUser({ auth }: HttpContextContract) {
+    const user = await auth.use('api').user
+    await user!.load('role')
+    return user!.serialize()
+  }
 }
