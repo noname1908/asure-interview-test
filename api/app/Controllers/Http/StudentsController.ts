@@ -6,7 +6,17 @@ import Student from 'App/Models/Student'
 import Mentor from 'App/Models/Mentor'
 
 export default class StudentsController {
-  public async index({}: HttpContextContract) {}
+  public async index({ isAdmin, auth }: HttpContextContract) {
+    const students = isAdmin
+      ? await Student.query().preload('user') // requested by admin
+      : await Student.query()
+          .whereHas('mentors', (studentsQuery) => {
+            studentsQuery.where('user_id', auth.user!.id) // requested by student
+          })
+          .preload('user')
+
+    return students.map((student) => student.serialize())
+  }
 
   public async store({ request }: HttpContextContract) {
     const mentorId = request.param('mentorId')
@@ -31,7 +41,11 @@ export default class StudentsController {
 
     return {
       id: student.id,
-      ...user.serialize(),
+      ...user.serialize({
+        fields: {
+          omit: ['id'],
+        },
+      }),
     }
   }
 
