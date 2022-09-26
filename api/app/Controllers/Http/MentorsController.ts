@@ -20,14 +20,24 @@ export default class MentorsController {
     // create new mentor
     const mentorRole = await Role.findByOrFail('name', 'mentor')
     const user = await User.create({ ...payload, roleId: mentorRole.id })
-    await user.related('mentor').create({})
+    const mentor = await user.related('mentor').create({})
 
-    return user
+    return {
+      id: mentor.id,
+      ...user.serialize(),
+    }
   }
 
   public async show({}: HttpContextContract) {}
 
   public async update({}: HttpContextContract) {}
 
-  public async destroy({}: HttpContextContract) {}
+  public async destroy({ request, response }: HttpContextContract) {
+    const mentorId = request.param('id', null)
+    // remove mentor from the database
+    const mentor = await Mentor.findOrFail(mentorId)
+    await mentor.delete()
+
+    return response.noContent()
+  }
 }

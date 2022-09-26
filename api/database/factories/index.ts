@@ -2,3 +2,4 @@
 
 export { default as RoleFactory } from './RoleFactory'
 export { default as UserFactory } from './UserFactory'
+export { default as MentorFactory } from './MentorFactory'
