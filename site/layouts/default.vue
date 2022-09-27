@@ -1,7 +1,21 @@
 <template>
   <v-app dark>
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-toolbar-title v-text="title" />
+      <v-btn text v-text="title" />
+
+      <!-- Desktop menu -->
+      <template v-for="link in navLinks">
+        <v-btn
+          v-if="can(link.roles)"
+          :key="link.name"
+          text
+          :to="link.to"
+          class="hidden-sm-and-down"
+        >
+          {{ link.name }}
+        </v-btn>
+      </template>
+
       <v-spacer />
 
       <div v-if="$auth.loggedIn">
@@ -41,16 +55,16 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
+      navLinks: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
+          name: 'Mentors',
+          to: '/mentors',
+          roles: ['admin', 'student'],
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          name: 'Students',
+          to: '/students',
+          roles: ['admin', 'mentor'],
         },
       ],
       miniVariant: false,
@@ -58,6 +72,12 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js',
     }
+  },
+
+  methods: {
+    can(roles) {
+      return this.$auth.loggedIn && roles.includes(this.$auth.user.role.name)
+    },
   },
 }
 </script>

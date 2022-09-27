@@ -2,7 +2,7 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { getAccessorType } from 'typed-vuex'
 
 // Import all your submodules
-// import * as submodule from '~/store/submodule'
+import * as mentor from '~/store/mentor'
 
 // ---vanilla Vuex code---
 export const state = () => ({
@@ -37,6 +37,6 @@ export const accessorType = getAccessorType({
   actions,
   modules: {
     // The key (submodule) needs to match the Nuxt namespace (e.g. ~/store/submodule.ts)
-    // submodule,
+    mentor,
   },
 })
