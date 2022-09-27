@@ -17,6 +17,8 @@ $ yarn deploy-all
 ```
 Then get the load balancer dns name from the console and access the application.
 
+Admin account: admin@gmail.com - secret
+
 ## Clean up
 
 ```bash
