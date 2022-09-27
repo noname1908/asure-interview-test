@@ -41,7 +41,29 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['@nuxtjs/axios', '@nuxtjs/toast'],
+
+  axios: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/api/': { target: 'http://localhost:3333' },
+  },
+
+  toast: {
+    position: 'top-right',
+    register: [
+      // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error',
+        },
+      },
+    ],
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
