@@ -116,6 +116,9 @@ echo "MYSQL_PORT=$MYSQL_PORT" >> .env
 echo "MYSQL_USER=$MYSQL_USER" >> .env
 echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> .env
 echo "MYSQL_DB_NAME=$MYSQL_DB_NAME" >> .env
+## run migration and db seed
+node ace migration:run
+node ace db:seed
 ## start server
 pm2 start server.js
 
