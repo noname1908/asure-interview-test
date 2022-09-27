@@ -6,6 +6,9 @@
 # ensure that AWS credentials and region already setup on local 
 $ aws configure
 
+# Ensure the env variables are set
+$ cp .env.example .env
+
 # deploys the CDK toolkit stack into an AWS environment
 $ cdk bootstrap
 

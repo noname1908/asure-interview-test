@@ -3,7 +3,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: '2.42.1',
   defaultReleaseBranch: 'main',
   name: 'asure-interview-test',
-  gitignore: ['.DS_Store', 'cdk.context.json'],
+  gitignore: ['.DS_Store', 'cdk.context.json', '.env'],
 
   deps: [
     'fs-extra',
