@@ -3,10 +3,10 @@ import { getAccessorType } from 'typed-vuex'
 
 // Import all your submodules
 import * as mentor from '~/store/mentor'
+import * as student from '~/store/student'
 
 // ---vanilla Vuex code---
 export const state = () => ({
-  things: [] as string[],
   name: 'Me',
 })
 
@@ -21,9 +21,7 @@ export const mutations: MutationTree<RootState> = {
 }
 
 export const actions: ActionTree<RootState, RootState> = {
-  async fetchThings({ commit }) {
-    const things = await this.$axios.$get('/things')
-    console.log(things)
+  fetchThings({ commit }) {
     commit('CHANGE_NAME', 'New name')
   },
 }
@@ -38,5 +36,6 @@ export const accessorType = getAccessorType({
   modules: {
     // The key (submodule) needs to match the Nuxt namespace (e.g. ~/store/submodule.ts)
     mentor,
+    student,
   },
 })
