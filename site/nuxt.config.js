@@ -46,7 +46,7 @@ export default {
   modules: ['@nuxtjs/axios', '@nuxtjs/toast', '@nuxtjs/auth-next'],
 
   axios: {
-    proxy: true,
+    // proxy: true,
   },
 
   proxy: {
