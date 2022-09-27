@@ -9,7 +9,7 @@ test.group('Auth get logged in user', (group) => {
     return () => Database.rollbackGlobalTransaction()
   })
 
-  test('should get user succeeded', async ({ client, assert }) => {
+  test('should get user succeeded', async ({ client }) => {
     const userData = {
       email: 'user@example.com',
       password: 'password',

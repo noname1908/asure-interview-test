@@ -1,7 +1,6 @@
 import { test } from '@japa/runner'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { MentorFactory, RoleFactory, UserFactory, StudentFactory } from 'Database/factories'
-import Mentor from 'App/Models/Mentor'
 import Student from 'App/Models/Student'
 
 test.group('Students delete', (group) => {
