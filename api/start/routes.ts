@@ -27,6 +27,11 @@ Route.get('/', async ({ response }) => {
 
   return report.healthy ? response.ok(report) : response.badRequest(report)
 })
+Route.get('/api', async ({ response }) => {
+  const report = await HealthCheck.getReport()
+
+  return report.healthy ? response.ok(report) : response.badRequest(report)
+})
 
 // auth
 Route.group(() => {
