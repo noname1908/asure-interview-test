@@ -20,7 +20,11 @@ export default class MentorsController {
   public async store({ request }: HttpContextContract) {
     // Mentor schema definition
     const newMentorSchema = schema.create({
-      email: schema.string([rules.email(), rules.normalizeEmail({ allLowercase: true })]),
+      email: schema.string([
+        rules.email(),
+        rules.normalizeEmail({ allLowercase: true }),
+        rules.unique({ table: 'users', column: 'email' }),
+      ]),
       password: schema.string([rules.minLength(8)]),
     })
 

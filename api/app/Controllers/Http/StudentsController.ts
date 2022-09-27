@@ -22,7 +22,11 @@ export default class StudentsController {
     const mentorId = request.param('mentorId')
     // Mentor schema definition
     const newStudentSchema = schema.create({
-      email: schema.string([rules.email(), rules.normalizeEmail({ allLowercase: true })]),
+      email: schema.string([
+        rules.email(),
+        rules.normalizeEmail({ allLowercase: true }),
+        rules.unique({ table: 'users', column: 'email' }),
+      ]),
       password: schema.string([rules.minLength(8)]),
     })
 
