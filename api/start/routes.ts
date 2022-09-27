@@ -33,18 +33,22 @@ Route.group(() => {
   Route.post('login', 'AuthController.login')
   Route.post('logout', 'AuthController.logout').middleware('auth:api')
   Route.get('user', 'AuthController.getLoggedInUser').middleware('auth:api')
-}).prefix('auth')
+}).prefix('api/auth')
 
 // mentors
 Route.group(() => {
   Route.post('mentors', 'MentorsController.store')
   Route.delete('mentors/:id', 'MentorsController.destroy')
   Route.get('mentors', 'MentorsController.index')
-}).middleware(['auth:api', 'checkPermission:mentor'])
+})
+  .prefix('api')
+  .middleware(['auth:api', 'checkPermission:mentor'])
 
 // students
 Route.group(() => {
   Route.post('mentors/:mentorId/students', 'StudentsController.store')
   Route.delete('students/:id', 'StudentsController.destroy')
   Route.get('students', 'StudentsController.index')
-}).middleware(['auth:api', 'checkPermission:student'])
+})
+  .prefix('api')
+  .middleware(['auth:api', 'checkPermission:student'])
