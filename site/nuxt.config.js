@@ -27,7 +27,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '@/plugins/api.ts' }],
+  plugins: [{ src: '@/plugins/api.ts' }, { src: '@/plugins/typedVuex.ts' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -38,6 +38,8 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    // https://typed-vuex.roe.dev
+    'nuxt-typed-vuex',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
