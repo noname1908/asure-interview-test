@@ -25,7 +25,9 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   public async handle(error: any, ctx: HttpContextContract) {
     // Self handle the auth attempt exception
     if (error.code === 'E_INVALID_AUTH_UID') {
-      return ctx.response.unauthorized('Invalid credentials')
+      return ctx.response.unauthorized({
+        errors: [{ message: 'Invalid credentials' }],
+      })
     }
 
     // Forward rest of the exceptions to the parent class

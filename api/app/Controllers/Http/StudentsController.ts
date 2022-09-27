@@ -54,13 +54,11 @@ export default class StudentsController {
   public async update({}: HttpContextContract) {}
 
   public async destroy({ request, response }: HttpContextContract) {
-    const mentorId = request.param('mentorId')
     const studentId = request.param('id')
     // remove student from the database
-    const mentor = await Mentor.findOrFail(mentorId)
     const student = await Student.findOrFail(studentId)
-    // unassign student from the mentor
-    await mentor.related('students').detach([student.id])
+    // unassign student from all mentor
+    await student.related('mentors').detach()
     // remove student
     await student.delete()
 

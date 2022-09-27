@@ -30,10 +30,8 @@ test.group('Students delete', (group) => {
   }
 
   test('get a status code 404 with invalid mentor id', async ({ client }) => {
-    const { requestUser, mentor } = await createMockData()
-    const response = await client
-      .delete(`/mentors/${mentor.id}/students/wrong-id`)
-      .loginAs(requestUser)
+    const { requestUser } = await createMockData()
+    const response = await client.delete(`/students/wrong-id`).loginAs(requestUser)
 
     response.assertStatus(404)
     response.assertBodyContains({
@@ -46,9 +44,7 @@ test.group('Students delete', (group) => {
     const student = await StudentFactory.with('user', 1, (user) => user.with('role')).create()
     await mentor.related('students').attach([student.id])
 
-    const response = await client
-      .delete(`/mentors/${mentor.id}/students/${student.id}`)
-      .loginAs(requestUser)
+    const response = await client.delete(`/students/${student.id}`).loginAs(requestUser)
 
     response.assertStatus(204)
     const oldStudent = await Student.find(student.id)
