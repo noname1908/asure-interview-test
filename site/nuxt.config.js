@@ -55,6 +55,8 @@ export default {
 
   toast: {
     position: 'top-right',
+    duration: 5000, // close after 5s
+    keepOnHover: true,
     register: [
       // Register custom toasts
       {
