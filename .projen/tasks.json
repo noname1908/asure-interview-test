@@ -137,6 +137,14 @@
         }
       ]
     },
+    "install-all": {
+      "name": "install-all",
+      "steps": [
+        {
+          "exec": "cd api && yarn install && cd ../site && yarn install && cd .. && yarn install"
+        }
+      ]
+    },
     "package": {
       "name": "package",
       "description": "Creates the distribution package"

@@ -13,7 +13,7 @@ $ cp .env.example .env
 $ cdk bootstrap
 
 # install all dependencies
-$ yarn install
+$ yarn install-all
 
 # deploy full-stack application to AWS environment
 $ yarn deploy-all

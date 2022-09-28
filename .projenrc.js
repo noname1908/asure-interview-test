@@ -21,4 +21,7 @@ project.addTask('deploy-all', {
 project.addTask('destroy-all', {
   exec: 'cdk destroy --all',
 });
+project.addTask('install-all', {
+  exec: 'cd api && yarn install && cd ../site && yarn install && cd .. && yarn install',
+});
 project.synth();
